@@ -72,30 +72,25 @@ function App() {
           }
         />
 
-        {/* Protected Routes */}
-        <Route
-          path="/"
-          element={
-            isAuthenticated ? (
-              <DashboardLayout />
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          }
-        >
-          <Route index element={<Navigate to="/dashboard" replace />} />
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="orders" element={<OrdersList />} />
-          <Route path="orders/new" element={<NewOrder />} />
-          <Route path="orders/:id" element={<OrderDetail />} />
-          <Route path="clients" element={<ClientsList />} />
-          <Route path="services" element={<ServicesList />} />
-          <Route path="payments" element={<PaymentsList />} />
-          <Route path="inventory" element={<Inventory />} />
-          <Route path="reports" element={<Reports />} />
-        </Route>
+        {/* Protected Routes - Wrapped in DashboardLayout */}
+        {isAuthenticated ? (
+          <Route path="/" element={<DashboardLayout />}>
+            <Route index element={<Navigate to="/dashboard" replace />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="orders" element={<OrdersList />} />
+            <Route path="orders/new" element={<NewOrder />} />
+            <Route path="orders/:id" element={<OrderDetail />} />
+            <Route path="clients" element={<ClientsList />} />
+            <Route path="services" element={<ServicesList />} />
+            <Route path="payments" element={<PaymentsList />} />
+            <Route path="inventory" element={<Inventory />} />
+            <Route path="reports" element={<Reports />} />
+          </Route>
+        ) : (
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        )}
 
-        {/* Catch all - redirect to login */}
+        {/* Catch all - redirect to login if not authenticated */}
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </BrowserRouter>

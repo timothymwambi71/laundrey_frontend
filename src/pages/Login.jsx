@@ -1,7 +1,7 @@
 // src/pages/Login.jsx
 import { useState } from 'react';
 import { api, getCsrfToken } from '../utils/api';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Login({ setIsAuthenticated }) {
   const [credentials, setCredentials] = useState({
@@ -25,10 +25,14 @@ function Login({ setIsAuthenticated }) {
       
       // Set authentication state
       setIsAuthenticated(true);
+      
+      // Navigate to dashboard
+      navigate('/dashboard'); // Add this line
     } catch (err) {
       console.error('Login error:', err);
       setError(
         err.response?.data?.detail ||
+        err.response?.data?.error ||
         'Invalid credentials. Please try again.'
       );
     } finally {
