@@ -73,20 +73,19 @@ apiClient.interceptors.request.use(
  */
 apiClient.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
     if (error.response) {
-      // Handle 403 Forbidden (CSRF failure)
+      // Handle 403 Forbidden - but don't retry infinitely
       if (error.response.status === 403) {
-        console.error('CSRF token validation failed. Refreshing token...');
-        // Optionally refresh CSRF token and retry
-        return getCsrfToken().then(() => {
-          return apiClient.request(error.config);
-        });
+        // Don't retry, just redirect to login
+        console.error('Authentication failed. Please login again.');
+        window.location.href = '/login';
+        return Promise.reject(error);
       }
 
-      // Handle 401 Unauthorized (authentication failure)
+      // Handle 401 Unauthorized
       if (error.response.status === 401) {
-        console.error('Authentication required. Redirecting to login...');
+        console.error('Session expired. Please login again.');
         window.location.href = '/login';
       }
     }
