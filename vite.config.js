@@ -5,6 +5,7 @@ import react from '@vitejs/plugin-react'
 // Note: Tailwind CSS integration is handled automatically by PostCSS (via postcss.config.js)
 // and does not require a specific Vite plugin here.
 export default defineConfig({
+  base: './', // Tells Vite to use relative paths (e.g., ./assets/...) for asset URLs
   plugins: [react()],
   
   // Adding server configuration to ensure it's accessible from the network 
