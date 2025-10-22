@@ -1,11 +1,4 @@
-# render.toml - Explicitly exclude files with extensions (assets) from rewrite
-[[rewrites]]
-  # This rule ensures files containing a dot (like .js, .css, .svg) are NOT rewritten.
-  # This serves the assets directly from the 'dist' folder.
-  source = "/assets/*"
-  destination = "/assets/:splat"
-
-# Fallback: Rewrite all other paths (the dynamic routes) to index.html
+# render.toml (Simple Rewrite)
 [[rewrites]]
   source = "/*"
   destination = "/index.html"
