@@ -21,9 +21,9 @@ function App() {
 
   useEffect(() => {
     const checkAuth = async () => {
-      console.log('Checking auth...'); // Debug log
+      // console.log('Checking auth...'); // Debug log
       const token = localStorage.getItem('access_token');
-      console.log('Token exists:', !!token); // Debug log
+      // console.log('Token exists:', !!token); // Debug log
       
       if (token) {
         try {
@@ -57,7 +57,7 @@ function App() {
     );
   }
 
-  console.log('Rendering app, isAuthenticated:', isAuthenticated); // Debug log
+  // console.log('Rendering app, isAuthenticated:', isAuthenticated); // Debug log
 
   return (
     <BrowserRouter>
