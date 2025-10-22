@@ -14,4 +14,9 @@ export default defineConfig({
     host: '0.0.0.0', // Allows access via network IP
     port: 5173,     // Standard Vite port
   },
+
+  // 🔑 CRITICAL: Change the output directory from 'dist' to 'public_html'
+  build: {
+    outDir: 'public_html', 
+  },  
 })
