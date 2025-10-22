@@ -1,9 +1,10 @@
-// src/pages/Login.jsx
+// src/pages/Login.jsx - JWT Version
 import { useState } from 'react';
-import { api, getCsrfToken } from '../utils/api';
+import { api } from '../utils/api';
 import { Link, useNavigate } from 'react-router-dom';
 
 function Login({ setIsAuthenticated }) {
+  const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
     username: '',
     password: '',
@@ -17,22 +18,19 @@ function Login({ setIsAuthenticated }) {
     setLoading(true);
 
     try {
-      // Ensure CSRF token is set
-      await getCsrfToken();
-      
-      // Attempt login
+      // Login - tokens are automatically stored by api.auth.login
       await api.auth.login(credentials);
       
       // Set authentication state
       setIsAuthenticated(true);
       
       // Navigate to dashboard
-      navigate('/dashboard'); // Add this line
+      navigate('/dashboard');
     } catch (err) {
       console.error('Login error:', err);
       setError(
-        err.response?.data?.detail ||
         err.response?.data?.error ||
+        err.response?.data?.detail ||
         'Invalid credentials. Please try again.'
       );
     } finally {
@@ -109,26 +107,6 @@ function Login({ setIsAuthenticated }) {
             </div>
           </div>
 
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <input
-                id="remember-me"
-                name="remember-me"
-                type="checkbox"
-                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-              />
-              <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
-                Remember me
-              </label>
-            </div>
-
-            <div className="text-sm">
-              <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
-                Forgot password?
-              </a>
-            </div>
-          </div>
-
           <button
             type="submit"
             disabled={loading}
@@ -148,22 +126,19 @@ function Login({ setIsAuthenticated }) {
           </button>
         </form>
 
-          {/* Register Link */}
-          <div className="text-center pt-4 border-t border-gray-200">
-            <p className="text-sm text-gray-600">
-              Don't have an account?{' '}
-              <Link to="/register" className="font-medium text-blue-600 hover:text-blue-500">
-                Register as staff
-              </Link>
-            </p>
-          </div>        
+        {/* Register Link */}
+        <div className="text-center pt-4 border-t border-gray-200">
+          <p className="text-sm text-gray-600">
+            Don't have an account?{' '}
+            <Link to="/register" className="font-medium text-blue-600 hover:text-blue-500">
+              Register as staff
+            </Link>
+          </p>
+        </div>
 
         {/* Footer */}
         <div className="text-center text-sm text-gray-600">
-          <p>Default credentials for testing:</p>
-          <p className="mt-1 font-mono text-xs bg-gray-100 p-2 rounded">
-            admin / admin123
-          </p>
+          <p>🔒 Secured with JWT Authentication</p>
         </div>
       </div>
     </div>
