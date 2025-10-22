@@ -20,21 +20,12 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user has valid token
-    const checkAuth = async () => {
+    const checkAuth = () => {
       try {
         const hasToken = api.auth.checkAuth();
-        if (hasToken) {
-          // Verify token is still valid by making a test API call
-          await api.staff.list({ page_size: 1 });
-          setIsAuthenticated(true);
-        } else {
-          setIsAuthenticated(false);
-        }
+        setIsAuthenticated(hasToken);
       } catch (error) {
-        // Token exists but is invalid/expired
         console.error('Auth check failed:', error);
-        api.auth.logout();
         setIsAuthenticated(false);
       } finally {
         setLoading(false);
@@ -46,10 +37,10 @@ function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600">
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-white text-lg">Loading...</p>
+          <div className="w-16 h-16 border-4 border-gray-300 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600 text-lg">Loading...</p>
         </div>
       </div>
     );

@@ -82,10 +82,9 @@ apiClient.interceptors.response.use(
 
       if (!refreshToken) {
         tokenManager.clearTokens();
-        window.location.href = '/login';
+        // Don't redirect here - let React Router handle it
         return Promise.reject(error);
       }
-
       try {
         // Try to refresh the token
         const response = await axios.post(
@@ -108,7 +107,7 @@ apiClient.interceptors.response.use(
         processQueue(refreshError, null);
         isRefreshing = false;
         tokenManager.clearTokens();
-        window.location.href = '/login';
+        // Don't redirect here - let React Router handle it
         return Promise.reject(refreshError);
       }
     }
