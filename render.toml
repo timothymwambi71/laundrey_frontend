@@ -1,0 +1,4 @@
+# render.toml (Simple Rewrite)
+[[rewrites]]
+  source = "/*"
+  destination = "/index.html"
