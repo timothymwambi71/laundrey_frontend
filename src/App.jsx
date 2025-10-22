@@ -21,15 +21,17 @@ function App() {
 
   useEffect(() => {
     const checkAuth = () => {
-      try {
-        const hasToken = api.auth.checkAuth();
-        setIsAuthenticated(hasToken);
-      } catch (error) {
-        console.error('Auth check failed:', error);
+      console.log('Checking auth...'); // Debug log
+      const token = localStorage.getItem('access_token');
+      console.log('Token exists:', !!token); // Debug log
+      
+      if (token) {
+        setIsAuthenticated(true);
+      } else {
         setIsAuthenticated(false);
-      } finally {
-        setLoading(false);
       }
+      
+      setLoading(false);
     };
 
     checkAuth();
@@ -45,6 +47,8 @@ function App() {
       </div>
     );
   }
+
+  console.log('Rendering app, isAuthenticated:', isAuthenticated); // Debug log
 
   return (
     <BrowserRouter>
